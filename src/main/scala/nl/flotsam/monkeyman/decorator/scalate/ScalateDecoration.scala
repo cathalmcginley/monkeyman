@@ -37,6 +37,7 @@ class ScalateDecoration(resource: Resource, template: Template, engine: Template
     val writer = new StringWriter
     val context = new DefaultRenderContext(path, engine, new PrintWriter(writer))
     context.attributes("allResources") = allResources()
+    context.attributes("currentPath") = path
     template.render(context)
     IOUtils.toInputStream(writer.toString)
   }
