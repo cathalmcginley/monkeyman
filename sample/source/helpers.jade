@@ -1,0 +1,12 @@
+html
+  head
+    title Helpers
+    link(href={uri("css/default.css")} rel="stylesheet" type="text/css")
+    link(href="http://fonts.googleapis.com/css?family=Alfa+Slab+One" rel="stylesheet" type="text/css")
+  body
+    p
+      | Current helpers are Link and Date.
+      != Link.to("index.html", "Home", ".")
+
+    div.last-modified
+      != Date.span(2013, 01, 12)

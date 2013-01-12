@@ -4,10 +4,10 @@ pubDateTime: 2013-01-12
 ---
 #Link helper
 
-`HyperLink` is a very simple hepler, available as `Link` in your SCAML
-or JADE layouts. It should simplify blocks of text with several links,
-rather than having to nest `a` elements and their text content (with 
-the trouble of spaces before trailing punctuation):
+`HyperLinkHelper` is a very simple hepler, available as `Link` in your
+SCAML or JADE layouts. It should simplify blocks of text with several
+links, rather than having to nest `a` elements and their text content
+(with the trouble of spaces before trailing punctuation):
 
     p
       | Read more

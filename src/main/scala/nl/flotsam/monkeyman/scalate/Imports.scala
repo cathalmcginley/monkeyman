@@ -21,6 +21,7 @@ package nl.flotsam.monkeyman.scalate
 
 import org.joda.time.LocalDateTime
 import nl.flotsam.monkeyman.helper.HyperLinkHelper
+import nl.flotsam.monkeyman.helper.DateSpanHelper
 
 
 object Imports {
@@ -30,5 +31,7 @@ object Imports {
   }
 
   val Link = new HyperLinkHelper
+  
+  val Date = new DateSpanHelper
   
 }
