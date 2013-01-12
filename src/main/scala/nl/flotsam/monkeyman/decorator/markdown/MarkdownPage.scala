@@ -1,6 +1,7 @@
 /*
  * Monkeyman static web site generator
  * Copyright (C) 2012  Wilfred Springer
+ * Copyright (C) 2013  Cathal Mc Ginley
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,18 +17,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+package nl.flotsam.monkeyman.decorator.markdown
 
-package nl.flotsam.monkeyman.decorator.yaml
-
-import nl.flotsam.monkeyman.{Resource, ResourceDecorator}
-
-import nl.flotsam.monkeyman.decorator.markdown.MarkdownPage
-import nl.flotsam.monkeyman.util.StringWithSuffix._
-
-class YamlFrontmatterDecorator(included: (Resource) => Boolean = { _.path.hasSuffix(MarkdownPage.Suffixes) }) extends ResourceDecorator {
-  
-  def decorate(resource: Resource) =
-    if (included(resource)) new YamlFrontmatterDecoration(resource)
-    else resource
-  
+object MarkdownPage {
+  val Suffixes = Seq(".md", ".markdown", ".page")
 }

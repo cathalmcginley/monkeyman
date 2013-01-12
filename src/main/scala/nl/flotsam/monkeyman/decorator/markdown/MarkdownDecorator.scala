@@ -20,11 +20,12 @@
 package nl.flotsam.monkeyman.decorator.markdown
 
 import nl.flotsam.monkeyman.{Resource, ResourceDecorator}
+import nl.flotsam.monkeyman.util.StringWithSuffix._
 
 class MarkdownDecorator extends ResourceDecorator {
   
   def decorate(resource: Resource) = {
-    if (resource.contentType == "text/x-web-markdown" || resource.path.endsWith(".md"))
+    if (resource.contentType == "text/x-web-markdown" || resource.path.hasSuffix(MarkdownPage.Suffixes))
       new MarkdownDecoration(resource)
     else resource
   }
