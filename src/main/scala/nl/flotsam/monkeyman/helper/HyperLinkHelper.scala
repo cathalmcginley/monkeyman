@@ -1,6 +1,7 @@
 /*
  * Monkeyman static web site generator
  * Copyright (C) 2012  Wilfred Springer	
+ * Copyright (C) 2013  Cathal Mc Ginley
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,19 +17,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+package nl.flotsam.monkeyman.helper
 
-package nl.flotsam.monkeyman.scalate
-
-import org.joda.time.LocalDateTime
-import nl.flotsam.monkeyman.helper.HyperLinkHelper
-
-
-object Imports {
+class HyperLinkHelper {
   
-  implicit object LocalDateTimeOrdering extends Ordering[LocalDateTime] {
-    def compare(x: LocalDateTime, y: LocalDateTime) = x.compareTo(y)
+  def to(uri: String, linkText: String, punctuation: String = "") = {
+    // NOTE this doesn't use a relative URI     
+    <a href={ uri }>{ linkText }</a> + punctuation  
   }
-
-  val Link = new HyperLinkHelper
   
 }
