@@ -17,26 +17,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package nl.flotsam.monkeyman.util
+package nl.flotsam.monkeyman.decorator.yaml
 
-class StringWithSuffix(str: String) {
+import nl.flotsam.monkeyman.Resource
+import nl.flotsam.monkeyman.util.Logging
+import com.esotericsoftware.yamlbeans.YamlReader
+import com.esotericsoftware.yamlbeans.YamlException
 
-  def hasSuffix(suffixes: Seq[String]): Boolean = {
-    val last = str.lastIndexOf(".")
-    if (last < 0) {
-      false
-    } else {
-      val suffix = str.substring(last)      
-      suffixes.contains(suffix)
+private[yaml] class YamlExtractor(resource: Resource, yamlString: String) extends Logging {
+  lazy val reader = new YamlReader(yamlString)
+  lazy val attributes: ResourceAttributes = extract(resource)
+
+  private def extract(resource: Resource) = {
+    try {
+      val attributesBean = reader.read(classOf[ResourceAttributesBean])
+      attributesBean.getAttributes(resource)
+    } catch {
+      case yamlEx: YamlException => {
+        warn("could not parse YAML front-matter for " + resource.path +
+            " : " + yamlEx.getMessage())
+        new ResourceAttributes()
+      }
     }
   }
-  
-}
 
-object StringWithSuffix {
-  
-  implicit def string2stringWithSuffix(str: String): StringWithSuffix = {
-    new StringWithSuffix(str)
-  }
-  
 }
+  

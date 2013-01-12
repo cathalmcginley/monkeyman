@@ -17,26 +17,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package nl.flotsam.monkeyman.util
+package nl.flotsam.monkeyman.decorator.yaml
 
-class StringWithSuffix(str: String) {
+import org.joda.time.LocalDateTime
 
-  def hasSuffix(suffixes: Seq[String]): Boolean = {
-    val last = str.lastIndexOf(".")
-    if (last < 0) {
-      false
-    } else {
-      val suffix = str.substring(last)      
-      suffixes.contains(suffix)
-    }
-  }
+private[yaml] class ResourceAttributes {
   
-}
-
-object StringWithSuffix {
+  var title: Option[String] = None
+  var published: Boolean = true  
+  var tags: Set[String] = Set()
+  var pubDateTime: Option[LocalDateTime] = None
   
-  implicit def string2stringWithSuffix(str: String): StringWithSuffix = {
-    new StringWithSuffix(str)
-  }
+  var options: Set[String] = Set()
   
 }
