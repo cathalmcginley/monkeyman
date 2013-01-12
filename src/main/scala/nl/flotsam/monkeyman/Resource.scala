@@ -65,7 +65,18 @@ trait Resource {
    * Get an HTML fragment to be included somewhere else.
    */
   def asHtmlFragment: Option[String]
-
+  
+  /**
+   * Change the way this resource is rendered, based on presence
+   * of option name. All considered to be off by default. 
+   * 
+   * Works like tags. But they're not free-form, they have to be defined
+   * in MonkeymanOptions. So you might include:
+   * 
+   * options: use-title-as-path
+   */
+  def options: Set[String]
+  
   /**
    * The unique identifier of this resource. Doesn't change during its lifetime.
    */

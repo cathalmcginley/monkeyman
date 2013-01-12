@@ -1,6 +1,7 @@
 /*
  * Monkeyman static web site generator
  * Copyright (C) 2012  Wilfred Springer
+ * Copyright (C) 2013  Cathal Mc Ginley
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,30 +20,8 @@
 
 package nl.flotsam.monkeyman
 
-import org.joda.time.LocalDateTime
-import eu.medsea.mimeutil.{MimeType, MimeUtil}
-import collection.JavaConversions._
+object MonkeymanOptions {
 
-case class ClasspathResource(path: String) extends Resource {
-
-  val url = getClass.getResource("/" + path)
-
-  def title = None
-
-  def pubDateTime = LocalDateTime.now()
-
-  def contentType = MimeUtil.getMimeTypes(url).asInstanceOf[java.util.Set[MimeType]].head.toString
-
-  def open = url.openStream()
-
-  def tags = Set.empty
-
-  def published = true
-
-  def asHtmlFragment = None
-  
-  def options = Set.empty
-  
-  def id = path
-
+  val UseTitleAsPath = "use-title-as-path"
+    
 }

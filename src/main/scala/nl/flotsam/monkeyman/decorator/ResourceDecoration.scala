@@ -38,7 +38,9 @@ class ResourceDecoration(resource: Resource) extends Resource {
   def published = resource.published
 
   def asHtmlFragment = resource.asHtmlFragment
-
+    
+  def options = resource.options
+  
   def id = resource.id
 
 }

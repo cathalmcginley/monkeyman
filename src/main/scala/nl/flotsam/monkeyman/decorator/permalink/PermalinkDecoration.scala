@@ -24,16 +24,26 @@ import nl.flotsam.monkeyman.Resource
 import com.ibm.icu.text.Transliterator
 import org.apache.commons.io.FilenameUtils._
 import annotation.tailrec
+import nl.flotsam.monkeyman.MonkeymanOptions
 
 case class PermalinkDecoration(resource: Resource) extends ResourceDecoration(resource) {
 
-  override def path =
-    resource.title.map {
-      str =>
-        getPath(resource.path) +
-        permalinkName(getBaseName(str), 60) +
+  override def path = {
+    if (resource.options.contains(MonkeymanOptions.UseTitleAsPath)) {
+      /* if resource has title "My New Page" return "my-new-page.html" */
+      resource.title.map {
+        str =>
+          getPath(resource.path) +
+            permalinkName(getBaseName(str), 60) +
+            "." + getExtension(resource.path)
+      }.getOrElse(resource.path)
+    } else {
+      /* default: base generated path on filename of resource source file */
+      getPath(resource.path) +
+        permalinkName(getBaseName(resource.id), 60) +
         "." + getExtension(resource.path)
-    }.getOrElse(resource.path)
+    }
+  }
 
   /**
    * Turns the String into something that wouldn't suck being part of a URI.
@@ -84,9 +94,6 @@ case class PermalinkDecoration(resource: Resource) extends ResourceDecoration(re
     }
 
   }
-
-
-
 
 }
 

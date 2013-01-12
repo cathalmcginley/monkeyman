@@ -45,6 +45,8 @@ case class FileSystemResource(baseDir: File, path: String) extends Resource {
 
   def asHtmlFragment = None
 
+  def options = Set.empty
+
   def id = path
 
 }
