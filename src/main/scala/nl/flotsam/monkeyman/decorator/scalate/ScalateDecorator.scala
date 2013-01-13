@@ -20,25 +20,29 @@
 package nl.flotsam.monkeyman.decorator.scalate
 
 import org.fusesource.scalate.TemplateEngine
-import org.fusesource.scalate.support.FileTemplateSource
-import nl.flotsam.monkeyman.{FileSystemResource, Resource, ResourceDecorator}
+import nl.flotsam.monkeyman.{ Resource, ResourceDecorator }
 import org.apache.commons.io.FilenameUtils
+import nl.flotsam.monkeyman.util.StringWithSuffix._
+import nl.flotsam.monkeyman.util.Logging
+import org.fusesource.scalate.support.StringTemplateSource
 
+class ScalateDecorator(engine: TemplateEngine, allResources: () => Seq[Resource]) extends ResourceDecorator with Logging {
 
-class ScalateDecorator(engine: TemplateEngine, allResources: () => Seq[Resource]) extends ResourceDecorator {
-
-  def decorate(resource: Resource) = resource match {
-    case res @ FileSystemResource(_, _) if TemplateEngine.templateTypes.contains(FilenameUtils.getExtension(res.path)) =>
-      val source = new FileTemplateSource(res.file, resource.path)
+  def decorate(resource: Resource) = {
+    if (resource.path.hasSuffix(TemplateEngine.templateTypes.map(ext => "." + ext))) {
       try {
+        val sourceString = scala.io.Source.fromInputStream(resource.open).mkString("")
+        val source = new StringTemplateSource(resource.path, sourceString)
         new ScalateDecoration(resource, engine.load(source), engine, allResources)
       } catch {
-        case t: Throwable =>
-          System.err.println(t.getMessage)
+        case t: Throwable => {
+          error(t.getMessage())
           resource
+        }
       }
-    case _ => resource
-  } 
-  
+    } else {
+      resource
+    }
+  }
 
 }

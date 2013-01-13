@@ -20,11 +20,13 @@
 package nl.flotsam.monkeyman.decorator.yaml
 
 import nl.flotsam.monkeyman.{Resource, ResourceDecorator}
-
 import nl.flotsam.monkeyman.decorator.markdown.MarkdownPage
 import nl.flotsam.monkeyman.util.StringWithSuffix._
+import org.fusesource.scalate.TemplateEngine
+import org.apache.commons.io.FilenameUtils
 
-class YamlFrontmatterDecorator(included: (Resource) => Boolean = { _.path.hasSuffix(MarkdownPage.Suffixes) }) extends ResourceDecorator {
+
+class YamlFrontmatterDecorator(included: (Resource) => Boolean = { _.path.hasSuffix(MarkdownPage.Suffixes ++ TemplateEngine.templateTypes.map(ext => "." + ext))}) extends ResourceDecorator {
   
   def decorate(resource: Resource) =
     if (included(resource)) new YamlFrontmatterDecoration(resource)

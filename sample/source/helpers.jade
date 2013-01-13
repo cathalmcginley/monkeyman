@@ -1,3 +1,11 @@
+---
+menu:
+  label: Helpers
+  order: 4
+info:
+  release: 0.1.1
+  codename: Reckless
+---
 html
   head
     title Helpers
@@ -21,3 +29,9 @@ html
           = currentPath
       - case Some(root) =>
         - layout("menu.jade", Map("rootNode" -> root))("")
+
+    p.info
+      - if (info.contains("release"))
+        = info("release")
+      - else
+        | No 'release' info

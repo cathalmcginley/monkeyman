@@ -20,6 +20,7 @@
 package nl.flotsam.monkeyman.decorator.scalate
 
 import nl.flotsam.monkeyman.decorator.ResourceDecoration
+
 import java.io.{PrintWriter, StringWriter}
 import org.apache.commons.io.IOUtils
 import nl.flotsam.monkeyman.Resource
@@ -38,6 +39,7 @@ class ScalateDecoration(resource: Resource, template: Template, engine: Template
     val context = new DefaultRenderContext(path, engine, new PrintWriter(writer))
     context.attributes("allResources") = allResources()
     context.attributes("currentPath") = path
+    context.attributes("info") = resource.info
     template.render(context)
     IOUtils.toInputStream(writer.toString)
   }
