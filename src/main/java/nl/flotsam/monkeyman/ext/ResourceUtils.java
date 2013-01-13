@@ -94,6 +94,7 @@ public class ResourceUtils {
 
 
     static class PathResolutionException extends RuntimeException {
+    	static final long serialVersionUID = 4567;
         PathResolutionException(String msg) {
             super(msg);
         }
