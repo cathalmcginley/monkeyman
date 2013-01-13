@@ -45,6 +45,8 @@ case class ClasspathResource(path: String) extends Resource {
   
   def menuLink = None
   
+  def info = Map.empty
+  
   def id = path
 
 }

@@ -56,6 +56,9 @@ class YamlFrontmatterDecoration(resource: Resource) extends ResourceDecoration(r
   override def menuLink =
     attributes.menuLink
     
+  override def info = 
+    resource.info ++ attributes.info  
+    
   override def published = attributes.published 
 
   override def tags =
@@ -76,7 +79,7 @@ class YamlFrontmatterDecoration(resource: Resource) extends ResourceDecoration(r
         val extractor = new YamlExtractor(resource, settings.mkString("\n"))        
         (extractor.attributes, Some(remainder.tail.mkString("\n")))
       case _ =>
-        (new ResourceAttributes(), None)
+        (new ResourceAttributes(), Some(str))
     }
   }
 

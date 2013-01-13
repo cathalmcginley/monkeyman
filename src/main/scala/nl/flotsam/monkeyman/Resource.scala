@@ -86,8 +86,18 @@ trait Resource {
   def menuLink: Option[MenuLink]
   
   /**
+   * Page information of various types. This allows you to
+   * define ad-hoc data which can be rendered in certain templates.
+   * 
+   * For example, if you have a page for each new software release, you
+   * could define "version", "codeName", "sourceLink" etc. and the
+   * "release" template could automatically lay out this information.
+   */
+  def info: Map[String, String]  
+  
+  /**
    * The unique identifier of this resource. Doesn't change during its lifetime.
    */
-  def id: String
+  def id: String 
   
 }

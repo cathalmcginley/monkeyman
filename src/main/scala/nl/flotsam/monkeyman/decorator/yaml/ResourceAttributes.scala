@@ -31,5 +31,5 @@ private[yaml] class ResourceAttributes {
   
   var options: Set[String] = Set()
   var menuLink: Option[MenuLink] = None
-  
+  var info: Map[String, String] = Map.empty
 }

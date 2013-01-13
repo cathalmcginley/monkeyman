@@ -26,6 +26,8 @@ import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import scala.util.control.Exception._
+import java.util.{HashMap => JMap}
+import scala.collection.JavaConversions._
 
 private[yaml] class ResourceAttributesBean extends Logging {
 
@@ -35,6 +37,7 @@ private[yaml] class ResourceAttributesBean extends Logging {
   @BeanProperty var tags: String = null // Array[String] = null
   @BeanProperty var pubDateTime: String = null // LocalDateTime
   @BeanProperty var menu: MenuBean = NotInMenu
+  @BeanProperty var info: JMap[String, String] = new JMap[String, String]()
 
   private val DateAndTimePattern = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm")
   private val DatePattern = DateTimeFormat.forPattern("yyyy-MM-dd")
@@ -71,6 +74,9 @@ private[yaml] class ResourceAttributesBean extends Logging {
 
     if (menu.display) {
       attribs.menuLink = Some(menu.getMenuLink(resource))
+    }
+    if (!info.isEmpty()) {
+      attribs.info = info.toMap
     }
     
     attribs
