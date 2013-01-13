@@ -52,6 +52,9 @@ class YamlFrontmatterDecoration(resource: Resource) extends ResourceDecoration(r
 
   override def options =
     resource.options ++ attributes.options
+   
+  override def menuLink =
+    attributes.menuLink
     
   override def published = attributes.published 
 

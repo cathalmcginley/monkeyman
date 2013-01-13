@@ -41,6 +41,8 @@ class ResourceDecoration(resource: Resource) extends Resource {
     
   def options = resource.options
   
+  def menuLink = resource.menuLink
+  
   def id = resource.id
 
 }

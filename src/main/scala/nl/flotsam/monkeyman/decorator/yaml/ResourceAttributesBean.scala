@@ -34,6 +34,7 @@ private[yaml] class ResourceAttributesBean extends Logging {
   @BeanProperty var options: String = null // Array[String] = null
   @BeanProperty var tags: String = null // Array[String] = null
   @BeanProperty var pubDateTime: String = null // LocalDateTime
+  @BeanProperty var menu: MenuBean = NotInMenu
 
   private val DateAndTimePattern = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm")
   private val DatePattern = DateTimeFormat.forPattern("yyyy-MM-dd")
@@ -68,6 +69,10 @@ private[yaml] class ResourceAttributesBean extends Logging {
       }
     }
 
+    if (menu.display) {
+      attribs.menuLink = Some(menu.getMenuLink(resource))
+    }
+    
     attribs
   }
 

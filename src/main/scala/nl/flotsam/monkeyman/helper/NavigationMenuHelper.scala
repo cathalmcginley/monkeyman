@@ -1,6 +1,7 @@
 /*
  * Monkeyman static web site generator
  * Copyright (C) 2012  Wilfred Springer	
+ * Copyright (C) 2013  Cathal Mc Ginley
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,25 +17,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+package nl.flotsam.monkeyman.helper
 
-package nl.flotsam.monkeyman.scalate
+import nl.flotsam.monkeyman.Resource
+import nl.flotsam.monkeyman.menu.MenuBuilder
+import nl.flotsam.monkeyman.menu.MenuLinkNode
 
-import org.joda.time.LocalDateTime
-import nl.flotsam.monkeyman.helper.HyperLinkHelper
-import nl.flotsam.monkeyman.helper.DateSpanHelper
-import nl.flotsam.monkeyman.helper.NavigationMenuHelper
+class NavigationMenuHelper {
 
-
-object Imports {
-  
-  implicit object LocalDateTimeOrdering extends Ordering[LocalDateTime] {
-    def compare(x: LocalDateTime, y: LocalDateTime) = x.compareTo(y)
+  def menuForPath(resources: Seq[Resource], currentPath: String): Option[MenuLinkNode] = {
+    MenuBuilder.build(resources, currentPath)
   }
-
-  val Link = new HyperLinkHelper
-  
-  val Date = new DateSpanHelper
-  
-  val Navigation = new NavigationMenuHelper
-  
+ 
+ 
 }

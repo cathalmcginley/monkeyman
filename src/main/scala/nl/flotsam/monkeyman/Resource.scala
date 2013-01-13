@@ -21,6 +21,7 @@ package nl.flotsam.monkeyman
 
 import java.io.InputStream
 import org.joda.time.LocalDateTime
+import nl.flotsam.monkeyman.menu.MenuLink
 
 trait Resource {
 
@@ -76,6 +77,13 @@ trait Resource {
    * options: use-title-as-path
    */
   def options: Set[String]
+  
+  /**
+   * An optional menu link to this resource. Need only be defined
+   * if this resource is going to appear as an item in some
+   * navigation menu or other.
+   */
+  def menuLink: Option[MenuLink]
   
   /**
    * The unique identifier of this resource. Doesn't change during its lifetime.

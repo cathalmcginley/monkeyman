@@ -1,0 +1,33 @@
+- import nl.flotsam.monkeyman.menu.MenuLinkNode
+-@ val rootNode: MenuLinkNode
+ul<
+  li(class={rootNode.cssClasses})><
+    - if (!rootNode.isMainMenu)
+      span><
+        = rootNode.submenuName
+    - if (rootNode.isCurrent)
+      = rootNode.submenuLabel
+    -else
+      a(href={uri(rootNode.href)})><
+        = rootNode.submenuLabel
+  - for (item <- rootNode.children)
+    -  if (item.isIndex)
+      - if (item.isOpen)
+        li(class={rootNode.cssClasses + " expanded-submenu"})><
+          - layout("menu.jade", Map("rootNode" -> item))
+            = item.label
+      - else
+        li(class={rootNode.cssClasses + " collapsed-submenu"})><
+          - if (item.isCurrent)
+            = item.label
+          - else
+            a(href={uri(item.href)})><
+              = item.label
+
+    - else
+      li(class={rootNode.cssClasses})><
+        - if (item.isCurrent)
+          = item.label
+        - else
+          a(href={uri(item.href)})><
+            = item.label

@@ -13,3 +13,11 @@ html
 
     p.current-path
       = currentPath
+
+    - Navigation.menuForPath(allResources, currentPath) match
+      - case None =>
+        /
+          | No navigation menu for 
+          = currentPath
+      - case Some(root) =>
+        - layout("menu.jade", Map("rootNode" -> root))("")
