@@ -69,8 +69,13 @@ abstract class MenuLinkNode(val resource: Resource) {
 
   def currentPageIs(path: String, map: HashMap[String, MenuRoot])
 
+  def open(map: HashMap[String, MenuRoot]) {
+    
+  }
+  
   def markCurrent(map: HashMap[String, MenuRoot]) {
     current = true
+    open(map)
     if (map.contains(link.menu.name)) {
       val parent = map(link.menu.name)
       parent.open(map)
@@ -108,7 +113,7 @@ class MenuRoot(res: Resource) extends MenuLinkNode(res) {
 
   val others: ArrayBuffer[MenuLinkNode] = new ArrayBuffer[MenuLinkNode]()
 
-  def open(map: HashMap[String, MenuRoot]) {
+  override def open(map: HashMap[String, MenuRoot]) {
     opened = true
     if (link.isIndex) {
       link.subMenu match {
