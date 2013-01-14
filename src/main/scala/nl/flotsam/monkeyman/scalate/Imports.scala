@@ -23,6 +23,7 @@ import org.joda.time.LocalDateTime
 import nl.flotsam.monkeyman.helper.HyperLinkHelper
 import nl.flotsam.monkeyman.helper.DateSpanHelper
 import nl.flotsam.monkeyman.helper.NavigationMenuHelper
+import nl.flotsam.monkeyman.helper.RelativePathHelper
 
 
 object Imports {
@@ -36,5 +37,7 @@ object Imports {
   val Date = new DateSpanHelper
   
   val Navigation = new NavigationMenuHelper
+  
+  val Path = new RelativePathHelper
   
 }

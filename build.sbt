@@ -16,7 +16,10 @@ libraryDependencies ++= Seq(
   "com.ibm.icu" % "icu4j" % "4.8.1.1",
   "ch.qos.logback" % "logback-core" % "1.0.0",
   "ch.qos.logback" % "logback-classic" % "1.0.0",
-  "com.asual.lesscss" % "lesscss-engine" % "1.1.5"
+  "com.asual.lesscss" % "lesscss-engine" % "1.1.5",
+  "org.specs2" %% "specs2" % "1.12.1",
+  "org.specs2" %% "specs2-scalaz-core" % "6.0.1" % "test",
+  "junit" % "junit" % "4.8.1" % "test"
 )
 
 initialCommands in console := "import java.io._; import nl.flotsam.monkeyman._"
