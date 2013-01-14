@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package nl.flotsam.monkeyman.helper
+import org.joda.time.LocalDateTime
 
 /**
  * This helper allows you to create formatted span elements with
@@ -37,7 +38,11 @@ class DateSpanHelper {
     "st", "nd", "rd", "th", "th", "th", "th", "th", "th", "th",
     "st")
 
-  def span(year: Int, month: Int, day: Int) = {
+  def span(dateTime: LocalDateTime): scala.xml.Elem = {
+    span(dateTime.getYear(), dateTime.getMonthOfYear(), dateTime.getDayOfMonth())
+  }
+    
+  def span(year: Int, month: Int, day: Int): scala.xml.Elem = {
     assert(month > 0 && month < 13, "month " + month +  " out of range 1..12; order is span(Year,Month,Date)")
     assert(day > 0 && day < 32, "day " + day +  " out of range 1..31; order is span(Year,Month,Date)")
     val dateClass = "date"
