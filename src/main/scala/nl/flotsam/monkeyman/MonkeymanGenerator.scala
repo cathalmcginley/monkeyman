@@ -20,15 +20,21 @@
 package nl.flotsam.monkeyman
 
 import java.io.File
+import java.io.InputStream
 import util.{Closeables, Logging}
 import Closeables._
 import org.apache.commons.io.FileUtils
 import org.clapper.argot.ArgotConverters._
+import org.joda.time.LocalDateTime
 
 object MonkeymanGenerator extends MonkeymanTool("monkeyman generate") with Logging {
 
   private val list = parser.flag("l", true, "Only list the pages found.")
 
+  private object InputStreamNoOp {
+    def take(i: InputStream) {}
+  }
+  
   def execute(config: MonkeymanConfiguration) {
     if (list.value == Some(true))
       println(config.registry.allResources.map {
@@ -40,11 +46,17 @@ object MonkeymanGenerator extends MonkeymanTool("monkeyman generate") with Loggi
 
   private def generate(config: MonkeymanConfiguration, targetDir: File) {
     targetDir.mkdirs()
+    val now = LocalDateTime.now().plusMinutes(1)
     for (resource <- config.registry.allResources) {
       val targetFile = new File(targetDir, resource.path)
       using(resource.open) {
-        info("Generating {}", resource.path)
-        FileUtils.copyInputStreamToFile(_, targetFile)
+        if (resource.published && resource.pubDateTime.isBefore(now)) {
+          info("Generating {}", resource.path)
+          FileUtils.copyInputStreamToFile(_, targetFile)
+        } else {
+          info("  Skipping {}", resource.path)
+          InputStreamNoOp.take(_)
+        }
       }
     }
   }
