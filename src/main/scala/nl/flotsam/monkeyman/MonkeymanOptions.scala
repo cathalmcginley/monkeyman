@@ -39,14 +39,17 @@ class InvalidOption(name: String) extends MonkeymanOption(name, false) {
 class MonkeymanOptions(protected val options: Seq[MonkeymanOption]) {
 
   private var _titleAsPath = new MonkeymanOption(MonkeymanOptions.TitleAsPath, false)
+  private var _articleJump = new MonkeymanOption(MonkeymanOptions.ArticleJump, false)
 
   def titleAsPath = _titleAsPath.on
+  def articleJump = _articleJump.on
 
   if (!options.isEmpty) {
     for (o <- options) {
       if (o.isValid) {
         o.name match {
           case MonkeymanOptions.TitleAsPath => _titleAsPath = o
+          case MonkeymanOptions.ArticleJump => _articleJump = o
         }
       }
     }
@@ -65,6 +68,7 @@ class MonkeymanOptions(protected val options: Seq[MonkeymanOption]) {
 object MonkeymanOptions {
 
   val TitleAsPath = "title-as-path"
+  val ArticleJump = "article-jump"
 
   def parse(optionStrings: Seq[String]): MonkeymanOptions = {
     new MonkeymanOptions(optionStrings.map(s => parse(s)))

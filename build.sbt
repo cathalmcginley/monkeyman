@@ -19,7 +19,8 @@ libraryDependencies ++= Seq(
   "com.asual.lesscss" % "lesscss-engine" % "1.1.5",
   "org.specs2" %% "specs2" % "1.12.1",
   "org.specs2" %% "specs2-scalaz-core" % "6.0.1" % "test",
-  "junit" % "junit" % "4.8.1" % "test"
+  "junit" % "junit" % "4.8.1" % "test",
+  "org.jsoup" % "jsoup" % "1.7.1"            
 )
 
 EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource

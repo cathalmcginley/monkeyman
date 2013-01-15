@@ -31,6 +31,7 @@ import org.apache.commons.io.FilenameUtils._
 import org.fusesource.scalate.{Binding, Template, TemplateEngine}
 import org.fusesource.scalate.util.{ResourceLoader => ScalateResourceLoader}
 import org.fusesource.scalate.support.URLTemplateSource
+import nl.flotsam.monkeyman.decorator.jsoup.JsoupDecorator
 
 case class MonkeymanConfiguration(sourceDir: File, layoutDir: File) {
 
@@ -111,9 +112,10 @@ case class MonkeymanConfiguration(sourceDir: File, layoutDir: File) {
         new ZussDecorator,
         new YamlFrontmatterDecorator(),
         new MarkdownDecorator(),
-        new SnippetDecorator(layoutResolver, templateEngine, allResources _),
+        new JsoupDecorator,
+        new SnippetDecorator(layoutResolver, templateEngine, allResources _),                
         new ScalateDecorator(templateEngine, allResources _),
-        PermalinkDecorator
+        PermalinkDecorator        
       )
     )
 
