@@ -1,7 +1,7 @@
 import sbt._
 import Keys._
 
-object MonkeyManBuild extends Build {
+object MonkeymanBuild extends Build {
 
   val getJars = TaskKey[Unit]("get-jars")
   val getJarsTask = getJars <<= (target, fullClasspath in Runtime) map { (target, cp) =>

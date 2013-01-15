@@ -21,6 +21,7 @@ package nl.flotsam.monkeyman.decorator.yaml
 
 import org.joda.time.LocalDateTime
 import nl.flotsam.monkeyman.menu.MenuLink
+import nl.flotsam.monkeyman.MonkeymanOptions
 
 private[yaml] class ResourceAttributes {
   
@@ -29,7 +30,7 @@ private[yaml] class ResourceAttributes {
   var tags: Set[String] = Set()
   var pubDateTime: Option[LocalDateTime] = None
   
-  var options: Set[String] = Set()
+  var options: MonkeymanOptions = new MonkeymanOptions(Seq())
   var menuLink: Option[MenuLink] = None
   var info: Map[String, String] = Map.empty
 }

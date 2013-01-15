@@ -49,9 +49,9 @@ class YamlFrontmatterDecoration(resource: Resource) extends ResourceDecoration(r
 
   override def title = 
     attributes.title.orElse(resource.title)
-
+  
   override def options =
-    resource.options ++ attributes.options
+    resource.options.add(attributes.options)
    
   override def menuLink =
     attributes.menuLink

@@ -29,12 +29,12 @@ import nl.flotsam.monkeyman.MonkeymanOptions
 case class PermalinkDecoration(resource: Resource) extends ResourceDecoration(resource) {
 
   override def path = {
-    if (resource.options.contains(MonkeymanOptions.UseTitleAsPath)) {
+    if (resource.options.titleAsPath) {
       /* if resource has title "My New Page" return "my-new-page.html" */
       resource.title.map {
         str =>
           getPath(resource.path) +
-            permalinkName(getBaseName(str), 60) +
+            permalinkName(str, 60) +
             "." + getExtension(resource.path)
       }.getOrElse(resource.path)
     } else {
@@ -53,7 +53,7 @@ case class PermalinkDecoration(resource: Resource) extends ResourceDecoration(re
   private def permalinkName(str: String, maxchars: Int = Int.MaxValue): String = {
     val cleaned = str.replace("&", " and ").replace("/", " or ")
     val parts = for {
-      word <- cleaned.split("[- :;,\t\n]+")
+      word <- cleaned.split("[- :;,.\t\n]+")
     } yield {
       withoutAccents(word).filter(_.isLetterOrDigit).toLowerCase
     }

@@ -19,8 +19,69 @@
  */
 package nl.flotsam.monkeyman
 
+class MonkeymanOption(val name: String, val on: Boolean) {
+
+  override def toString(): String = {
+    if (on) {
+      "with[" + name + "]"
+    } else {
+      "without[" + name + "]"
+    }
+  }
+
+  def isValid = true
+}
+
+class InvalidOption(name: String) extends MonkeymanOption(name, false) {
+  override def isValid = false
+}
+
+class MonkeymanOptions(protected val options: Seq[MonkeymanOption]) {
+
+  private var _titleAsPath = new MonkeymanOption(MonkeymanOptions.TitleAsPath, false)
+
+  def titleAsPath = _titleAsPath.on
+
+  if (!options.isEmpty) {
+    for (o <- options) {
+      if (o.isValid) {
+        o.name match {
+          case MonkeymanOptions.TitleAsPath => _titleAsPath = o
+        }
+      }
+    }
+  }
+
+  def add(moreOptions: Seq[MonkeymanOption]): MonkeymanOptions = {
+    new MonkeymanOptions(options ++ moreOptions)
+  }
+
+  def add(moreOptions: MonkeymanOptions): MonkeymanOptions = {
+    new MonkeymanOptions(options ++ moreOptions.options)
+  }
+
+}
+
 object MonkeymanOptions {
 
-  val UseTitleAsPath = "use-title-as-path"
-    
+  val TitleAsPath = "title-as-path"
+
+  def parse(optionStrings: Seq[String]): MonkeymanOptions = {
+    new MonkeymanOptions(optionStrings.map(s => parse(s)))
+  }
+
+  def parse(optionString: String): MonkeymanOption = {
+    val parts = optionString.split("-")
+    val withOrWithout = parts.head
+
+    val optionName = parts.tail.mkString("-")
+    if (withOrWithout.equals("with")) {
+      new MonkeymanOption(optionName, true)
+    } else if (withOrWithout.equals("without")) {
+      new MonkeymanOption(optionName, false)
+    } else {
+      new InvalidOption(optionString)
+    }
+  }
+
 }

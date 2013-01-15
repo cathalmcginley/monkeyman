@@ -41,7 +41,7 @@ case class ClasspathResource(path: String) extends Resource {
 
   def asHtmlFragment = None
   
-  def options = Set.empty
+  def options = new MonkeymanOptions(Seq())
   
   def menuLink = None
   

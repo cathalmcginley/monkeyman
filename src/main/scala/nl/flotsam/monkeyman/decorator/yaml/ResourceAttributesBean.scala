@@ -28,6 +28,7 @@ import org.joda.time.format.DateTimeFormatter
 import scala.util.control.Exception._
 import java.util.{HashMap => JMap}
 import scala.collection.JavaConversions._
+import nl.flotsam.monkeyman.MonkeymanOptions
 
 private[yaml] class ResourceAttributesBean extends Logging {
 
@@ -52,11 +53,11 @@ private[yaml] class ResourceAttributesBean extends Logging {
 
   def getAttributes(resource: Resource) = {
     val attribs = new ResourceAttributes()
-    if (title != null) attribs.title = Some(title)
+    if (title != null) attribs.title = Some(title)   
     attribs.published = published
 
     if (options != null) {
-      attribs.options = options.split(",").map(_.trim).toSet
+      attribs.options = MonkeymanOptions.parse(options.split(",").map(_.trim))
     }
 
     if (tags != null) {

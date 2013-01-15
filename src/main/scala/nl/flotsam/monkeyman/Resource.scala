@@ -77,7 +77,7 @@ trait Resource {
    * 
    * options: use-title-as-path
    */
-  def options: Set[String]
+  def options: MonkeymanOptions
   
   /**
    * An optional menu link to this resource. Need only be defined
