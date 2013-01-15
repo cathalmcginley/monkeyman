@@ -23,14 +23,40 @@ import org.joda.time.LocalDateTime
 import nl.flotsam.monkeyman.menu.MenuLink
 import nl.flotsam.monkeyman.MonkeymanOptions
 
-private[yaml] class ResourceAttributes {
+//class ResourceAttributes {
+//  
+//  var title: Option[String] = None
+//  var published: Boolean = true  
+//  var tags: Set[String] = Set()
+//  var pubDateTime: Option[LocalDateTime] = None
+//  
+//  var options: MonkeymanOptions = new MonkeymanOptions(Seq())
+//  var menuLink: Option[MenuLink] = None
+//  var info: Map[String, String] = Map.empty
+//}
+
+case class ResourceAttributes(var title: Option[String] = None,
+  var published: Boolean = true,
+  var tags: Set[String] = Set(),
+  var pubDateTime: Option[LocalDateTime] = None,  
+  var options: MonkeymanOptions = new MonkeymanOptions(Seq()),
+  var menuLink: Option[MenuLink] = None,
+  var info: Map[String, String] = Map.empty) {
+    
+ 
+  def withTitle(t: String) = copy(title = Some(t))
+  def withPublished(b: Boolean) = copy(published = true)  
+  def withTags(t: Set[String]) = copy(tags = tags ++ t)
+  def withPubDateTime(pdt: LocalDateTime) = copy(pubDateTime = Some(pdt))
   
-  var title: Option[String] = None
-  var published: Boolean = true  
-  var tags: Set[String] = Set()
-  var pubDateTime: Option[LocalDateTime] = None
-  
-  var options: MonkeymanOptions = new MonkeymanOptions(Seq())
-  var menuLink: Option[MenuLink] = None
-  var info: Map[String, String] = Map.empty
+  def withOptions(o: MonkeymanOptions) = copy(options = o) // TODO combine options
+  def withMenuLink(ml: MenuLink) = copy(menuLink = Some(ml))
+  def withInfo(i: Map[String, String]) = copy(info = info ++ i)
 }
+
+//object A {
+//val parent = ResourceAttributes()
+//  .withTitle("foo bar baz")
+//  
+//  
+//}

@@ -26,7 +26,7 @@ import org.joda.time.LocalDateTime
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import scala.util.control.Exception._
-import java.util.{HashMap => JMap}
+import java.util.{ HashMap => JMap }
 import scala.collection.JavaConversions._
 import nl.flotsam.monkeyman.MonkeymanOptions
 
@@ -52,35 +52,73 @@ private[yaml] class ResourceAttributesBean extends Logging {
   }
 
   def getAttributes(resource: Resource) = {
-    val attribs = new ResourceAttributes()
-    if (title != null) attribs.title = Some(title)   
-    attribs.published = published
 
-    if (options != null) {
-      attribs.options = MonkeymanOptions.parse(options.split(",").map(_.trim))
-    }
-
-    if (tags != null) {
-      attribs.tags = tags.split(",").map(_.trim).toSet
-    }
-
-    if (pubDateTime != null) {
-      val dateTime = parseDateTime(pubDateTime)
-      if (dateTime.isDefined) {
-        attribs.pubDateTime = dateTime
-      } else {
-          warn("Failed to parse pubDateTime in %s".format(resource.path))
-      }
-    }
-
-    if (menu.display) {
-      attribs.menuLink = Some(menu.getMenuLink(resource))
-    }
-    if (!info.isEmpty()) {
-      attribs.info = info.toMap
-    }
+    val attributeBuilders: Seq[(ResourceAttributes => ResourceAttributes)] = Seq(
+      (attr) => 
+        if (title == null) { attr }
+        else { attr.withTitle(title) },
+      (attr) => 
+        attr.withPublished(published),       
+      (attr) =>
+        if (pubDateTime == null) { attr }
+        else {
+          parseDateTime(pubDateTime) match {
+            case None => {
+              warn("Failed to parse pubDateTime in %s".format(resource.path))
+              attr
+            }
+            case Some(dateTime) => {
+              attr.withPubDateTime(dateTime)            
+            }
+          }          
+        },          
+      (attr) => 
+        if (tags == null) { attr }
+        else { attr.withTags(tags.split(",").map(_.trim).toSet) },
+      (attr) => 
+        if (options == null) { attr }
+        else { attr.withOptions(MonkeymanOptions.parse(options.split(",").map(_.trim))) },
+      (attr) => 
+        if (!menu.display) { attr }
+        else { attr.withMenuLink(menu.getMenuLink(resource)) },
+      (attr) => 
+        if (!info.isEmpty) { attr }
+        else { attr.withInfo(info.toMap) }        
+    )
     
-    attribs
+     attributeBuilders.foldLeft(ResourceAttributes())((attr, build) => build(attr))
   }
+//
+//    println("attr " + attr.title + " | " + attr.tags + " | " + attr.options)
+
+    //if (title != null) attribs.title = Some(title)
+    //attribs.published = published
+
+//    if (options != null) {
+//      attribs.options = MonkeymanOptions.parse(options.split(",").map(_.trim))
+//    }
+
+//    if (tags != null) {
+//      attribs.tags = tags.split(",").map(_.trim).toSet
+//    }
+//
+//    if (pubDateTime != null) {
+//      val dateTime = parseDateTime(pubDateTime)
+//      if (dateTime.isDefined) {
+//        attribs.pubDateTime = dateTime
+//      } else {
+//        warn("Failed to parse pubDateTime in %s".format(resource.path))
+//      }
+//    }
+
+//    if (menu.display) {
+//      attribs.menuLink = Some(menu.getMenuLink(resource))
+//    }
+//    if (!info.isEmpty()) {
+//      attribs.info = info.toMap
+//    }
+
+    
+//  }
 
 }
