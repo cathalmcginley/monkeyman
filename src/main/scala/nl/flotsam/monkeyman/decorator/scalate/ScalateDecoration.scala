@@ -20,13 +20,13 @@
 package nl.flotsam.monkeyman.decorator.scalate
 
 import nl.flotsam.monkeyman.decorator.ResourceDecoration
-
 import java.io.{PrintWriter, StringWriter}
 import org.apache.commons.io.IOUtils
 import nl.flotsam.monkeyman.Resource
 import org.fusesource.scalate.{Template, DefaultRenderContext, TemplateEngine}
 import org.apache.commons.io.FilenameUtils._
 import nl.flotsam.monkeyman.helper.RelativePathHelper
+import nl.flotsam.monkeyman.helper.NavigationMenuHelper
 
 class ScalateDecoration(resource: Resource, template: Template, engine: TemplateEngine, allResources: () => Seq[Resource])
   extends ResourceDecoration(resource)
@@ -41,6 +41,7 @@ class ScalateDecoration(resource: Resource, template: Template, engine: Template
     context.attributes("allResources") = allResources()
     context.attributes("currentPath") = resource.eventual.path
     context.attributes("Path") = new RelativePathHelper(resource)
+    context.attributes("Navigation") = new NavigationMenuHelper(allResources(), resource)
     context.attributes("info") = resource.info
     template.render(context)
     IOUtils.toInputStream(writer.toString)

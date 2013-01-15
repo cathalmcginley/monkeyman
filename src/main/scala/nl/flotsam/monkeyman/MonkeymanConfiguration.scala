@@ -84,13 +84,17 @@ case class MonkeymanConfiguration(sourceDir: File, layoutDir: File) {
     name = "pubDateTime",
     className = "org.joda.time.LocalDateTime",
     defaultValue = Some("LocalDateTime.now")
-  ):: new Binding(
+  ) :: new Binding(
     name = "currentPath",
     className = "String",
     defaultValue = Some(""""index.html"""")
-  ):: new Binding(
+  ) :: new Binding(
     name = "Path",
     className = "nl.flotsam.monkeyman.helper.RelativePathHelper",
+    defaultValue = None
+  ) :: new Binding(
+    name = "Navigation",
+    className = "nl.flotsam.monkeyman.helper.NavigationMenuHelper",
     defaultValue = None
   ) :: new Binding(
     name = "info",

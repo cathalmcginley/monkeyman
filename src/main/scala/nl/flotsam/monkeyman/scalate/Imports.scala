@@ -35,7 +35,5 @@ object Imports {
   val Link = new HyperLinkHelper
   
   val Date = new DateSpanHelper
-  
-  val Navigation = new NavigationMenuHelper
-  
+    
 }

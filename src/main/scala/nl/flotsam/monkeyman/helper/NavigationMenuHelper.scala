@@ -23,11 +23,16 @@ import nl.flotsam.monkeyman.Resource
 import nl.flotsam.monkeyman.menu.MenuBuilder
 import nl.flotsam.monkeyman.menu.MenuLinkNode
 
-class NavigationMenuHelper {
+class NavigationMenuHelper(private val allResources: Seq[Resource], 
+    current: Resource) {
 
-  def menuForPath(resources: Seq[Resource], currentPath: String): Option[MenuLinkNode] = {
-    MenuBuilder.build(resources, currentPath)
+  def menuRoot: Option[MenuLinkNode] = {
+    MenuBuilder.build(allResources, current.path)
   }
+  
+//  def menuForPath(resources: Seq[Resource], currentPath: String): Option[MenuLinkNode] = {
+//    MenuBuilder.build(resources, currentPath)
+//  }
  
  
 }
