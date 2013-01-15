@@ -23,6 +23,8 @@ import nl.flotsam.monkeyman.Resource
 
 class ResourceDecoration(resource: Resource) extends Resource {
 
+  resource.decoratedBy(this)
+  
   def title = resource.title
 
   def pubDateTime = resource.pubDateTime
@@ -46,5 +48,5 @@ class ResourceDecoration(resource: Resource) extends Resource {
   def info = resource.info
     
   def id = resource.id
-
+  
 }

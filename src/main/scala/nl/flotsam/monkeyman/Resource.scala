@@ -22,6 +22,7 @@ package nl.flotsam.monkeyman
 import java.io.InputStream
 import org.joda.time.LocalDateTime
 import nl.flotsam.monkeyman.menu.MenuLink
+import nl.flotsam.monkeyman.decorator.ResourceDecoration
 
 trait Resource {
 
@@ -95,9 +96,33 @@ trait Resource {
    */
   def info: Map[String, String]  
   
+  
   /**
    * The unique identifier of this resource. Doesn't change during its lifetime.
    */
   def id: String 
   
+  private var decorator: Option[ResourceDecoration] = None
+  def decoratedBy(dec: ResourceDecoration) {
+    decorator = Some(dec)
+  }
+  
+  /**
+   * This follows decorators in the opposite direction
+   * (assuming ResourceDecoration correctly calls resource.decoratedBy(this)
+   * every time it wraps a resource in a decorator).
+   * 
+   * Use sparingly, as it breaks the abstraction.
+   * 
+   * Use with care, since it's just possible that infinite loops may result.
+   */
+  def eventual: Resource = {
+    decorator match {
+      case None => this
+      case Some(decorator) => decorator.eventual
+    }
+  }
+
+  
+
 }

@@ -43,7 +43,7 @@ class SnippetDecoration(resource: Resource, layoutResolver: LayoutResolver, engi
         context.attributes("tags") = tags
         context.attributes("pubDateTime") = pubDateTime
         context.attributes("allResources") = allResources()
-        context.attributes("currentPath") = path
+        context.attributes("currentPath") = resource.eventual.path
         context.attributes("info") = resource.info
         layoutResolver.resolve(path).render(context)
         IOUtils.toInputStream(writer.getBuffer, "UTF-8")
