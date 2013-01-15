@@ -26,6 +26,7 @@ import org.apache.commons.io.IOUtils
 import nl.flotsam.monkeyman.Resource
 import org.fusesource.scalate.{Template, DefaultRenderContext, TemplateEngine}
 import org.apache.commons.io.FilenameUtils._
+import nl.flotsam.monkeyman.helper.RelativePathHelper
 
 class ScalateDecoration(resource: Resource, template: Template, engine: TemplateEngine, allResources: () => Seq[Resource])
   extends ResourceDecoration(resource)
@@ -38,7 +39,8 @@ class ScalateDecoration(resource: Resource, template: Template, engine: Template
     val writer = new StringWriter
     val context = new DefaultRenderContext(path, engine, new PrintWriter(writer))
     context.attributes("allResources") = allResources()
-    context.attributes("currentPath") = path
+    context.attributes("currentPath") = resource.eventual.path
+    context.attributes("Path") = new RelativePathHelper(resource)
     context.attributes("info") = resource.info
     template.render(context)
     IOUtils.toInputStream(writer.toString)

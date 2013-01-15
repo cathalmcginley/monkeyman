@@ -19,17 +19,10 @@
  */
 package nl.flotsam.monkeyman.helper
 
+import nl.flotsam.monkeyman.Resource
 import nl.flotsam.monkeyman.util.Logging
 
-class RelativePathHelper extends Logging {
-
-  class PathFrom(private val fromPath: String) {
-
-    def to(toPath: String): String = {
-      pathFromTo(fromPath, toPath)
-    }
-
-  }
+class RelativePathHelper(private val resource: Resource) extends Logging {
 
   /**
    * Strip .html from links, and link to somepath/ rather than somepath/index.html.
@@ -37,7 +30,11 @@ class RelativePathHelper extends Logging {
    */
   def coolUrls: Boolean = false
 
-  def pathFromTo(fromPath: String, toPath: String): String = {
+  def to(toPath: String): String = {
+    pathFromTo(resource.path, toPath)
+  } 
+  
+  private[helper] def pathFromTo(fromPath: String, toPath: String): String = {
     val (fromParts, toParts) = stripCommonPrefix(fromPath.split("/"), toPath.split("/"))
     if (fromParts.size == 1) {
       toParts.mkString("/")
@@ -46,9 +43,7 @@ class RelativePathHelper extends Logging {
       (Seq.fill(parentPathCount)("..") ++ toParts).mkString("/")
     }
   }
-
-  def from(fromPath: String) = new PathFrom(fromPath)
-
+  
   private def stripCommonPrefix(fromParts: Seq[String], toParts: Seq[String]): Pair[Seq[String], Seq[String]] = {
     val common = commonPrefix(fromParts, toParts)
     val prefixLength = common.size

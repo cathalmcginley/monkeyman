@@ -38,6 +38,4 @@ object Imports {
   
   val Navigation = new NavigationMenuHelper
   
-  val Path = new RelativePathHelper
-  
 }

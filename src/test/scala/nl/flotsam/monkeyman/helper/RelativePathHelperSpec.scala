@@ -22,11 +22,16 @@ package nl.flotsam.monkeyman.helper
 import org.specs2.mutable._
 import org.junit.runner.RunWith
 import org.specs2.runner.JUnitRunner
+import nl.flotsam.monkeyman.ClasspathResource
 
 @RunWith(classOf[JUnitRunner])
 class RelativePathHelperSpec extends Specification {
 
-  val Path = new RelativePathHelper()
+  def helperFor(path: String): RelativePathHelper = {
+    new RelativePathHelper(new ClasspathResource(path))
+  }
+  
+  val Path = helperFor(null)
   def relativePath(from: String, to: String) = Path.pathFromTo(from, to)
 
   "links to subdirectories" should {
@@ -94,16 +99,18 @@ class RelativePathHelperSpec extends Specification {
     }
   }
   
-  "helper.from(_).to(_)" should {
+  "helper constructed from a real resource" should {
     val from = "abc/def/ghi/index.html"
     val to = "abc/jkl/mno/other.html"    
     val expected = "../../jkl/mno/other.html"
       
+    val boundPath = helperFor(from)
+      
     "link up to parent directory and down again" in {
-      Path.from(from).to(to) must be equalTo expected
+      boundPath.to(to) must be equalTo expected
     }
     "refer to to parent dirs" in {
-      Path.from(from).to(to).indexOf("..") must not equalTo -1
+      boundPath.to(to).indexOf("..") must not equalTo -1
     }
   }
   

@@ -88,6 +88,10 @@ case class MonkeymanConfiguration(sourceDir: File, layoutDir: File) {
     name = "currentPath",
     className = "String",
     defaultValue = Some(""""index.html"""")
+  ):: new Binding(
+    name = "Path",
+    className = "nl.flotsam.monkeyman.helper.RelativePathHelper",
+    defaultValue = None
   ) :: new Binding(
     name = "info",
     className = "Map[String, String]",
