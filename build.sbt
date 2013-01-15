@@ -22,6 +22,8 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.8.1" % "test"
 )
 
+EclipseKeys.createSrc := EclipseCreateSrc.Default + EclipseCreateSrc.Resource
+
 initialCommands in console := "import java.io._; import nl.flotsam.monkeyman._"
 
 mainClass in (Compile, run) := Some("nl.flotsam.monkeyman.Monkeyman")
