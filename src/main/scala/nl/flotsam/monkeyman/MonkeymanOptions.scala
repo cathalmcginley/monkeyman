@@ -36,7 +36,7 @@ class InvalidOption(name: String) extends MonkeymanOption(name, false) {
   override def isValid = false
 }
 
-class MonkeymanOptions(protected val options: Seq[MonkeymanOption]) {
+class MonkeymanOptions(protected val options: Seq[MonkeymanOption] = Seq()) {
 
   private var _titleAsPath = new MonkeymanOption(MonkeymanOptions.TitleAsPath, false)
   private var _articleJump = new MonkeymanOption(MonkeymanOptions.ArticleJump, false)

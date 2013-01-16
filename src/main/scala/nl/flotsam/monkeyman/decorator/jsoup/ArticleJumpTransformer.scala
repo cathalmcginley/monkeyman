@@ -27,8 +27,8 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import nl.flotsam.monkeyman.Resource
 import nl.flotsam.monkeyman.decorator.yaml.ResourceAttributes
-
 import scala.collection.JavaConversions._
+import nl.flotsam.monkeyman.Minidoc
 
 object ArticleJumpTransformer extends JsoupTransformer("ArticleJump") {
 
@@ -63,7 +63,7 @@ object ArticleJumpTransformer extends JsoupTransformer("ArticleJump") {
         }
         jumpElement.replaceWith(new Comment("jump", ""))
         // TODO attr.withMinidoc(minidocJMap.toMap)
-        attr.withInfo(Map("before-the-jump" -> beforeDiv.html()))
+        attr.withMinidoc(Map("before-the-jump" -> Minidoc.fromHtml("before-the-jump", beforeDiv.html())))
         }
       }
   }

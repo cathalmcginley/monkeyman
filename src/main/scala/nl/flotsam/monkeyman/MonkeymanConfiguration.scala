@@ -101,6 +101,10 @@ case class MonkeymanConfiguration(sourceDir: File, layoutDir: File) {
     name = "info",
     className = "Map[String, String]",
     defaultValue = Some("Map.empty[String, String]")
+  ) :: new Binding(
+    name = "minidoc",
+    className = "Map[String, String]",
+    defaultValue = Some("Map.empty[String, String]")
   ) :: templateEngine.bindings
 
 

@@ -49,6 +49,7 @@ class SnippetDecoration(resource: Resource, layoutResolver: LayoutResolver, engi
         context.attributes("Path") = new RelativePathHelper(resource) 
         context.attributes("Navigation") = new NavigationMenuHelper(allResources(), resource)
         context.attributes("info") = resource.info
+        context.attributes("minidoc") = resource.minidoc.map { case (name, minidoc) => (name -> minidoc.html) }
         layoutResolver.resolve(path).render(context)
         IOUtils.toInputStream(writer.getBuffer, "UTF-8")
     }

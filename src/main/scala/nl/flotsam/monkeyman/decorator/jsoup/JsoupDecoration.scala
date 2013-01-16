@@ -66,6 +66,10 @@ case class JsoupDecoration(resource: Resource) extends ResourceDecoration(resour
   override def info = {
     resource.info ++ modifiedAttributes.info
   }
+  
+  override def minidoc = {
+    resource.minidoc ++ modifiedAttributes.minidoc
+  }
 
 
 }

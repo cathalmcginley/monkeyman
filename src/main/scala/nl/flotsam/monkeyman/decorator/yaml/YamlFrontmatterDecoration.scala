@@ -58,6 +58,10 @@ class YamlFrontmatterDecoration(resource: Resource) extends ResourceDecoration(r
     
   override def info = 
     resource.info ++ attributes.info  
+
+  override def minidoc = 
+    resource.minidoc ++ attributes.minidoc  
+    
     
   override def published = attributes.published 
 

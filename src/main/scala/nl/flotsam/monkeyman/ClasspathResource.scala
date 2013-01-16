@@ -47,6 +47,8 @@ case class ClasspathResource(path: String) extends Resource {
   
   def info = Map.empty
   
+  def minidoc = Map.empty
+  
   def id = path
 
 }

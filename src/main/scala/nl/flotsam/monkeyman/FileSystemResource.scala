@@ -51,6 +51,8 @@ case class FileSystemResource(baseDir: File, path: String) extends Resource {
 
   def info = Map.empty
   
+  def minidoc = Map.empty
+  
   def id = path
 
 }

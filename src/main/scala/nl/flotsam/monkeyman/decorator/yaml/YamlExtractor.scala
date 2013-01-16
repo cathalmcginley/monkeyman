@@ -35,7 +35,7 @@ private[yaml] class YamlExtractor(resource: Resource, yamlString: String) extend
     } catch {
       case yamlEx: YamlException => {
         warn("could not parse YAML front-matter for " + resource.path +
-            " : " + yamlEx.getMessage())
+          " : " + yamlEx.getMessage())
         new ResourceAttributes()
       }
     }

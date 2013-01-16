@@ -96,6 +96,15 @@ trait Resource {
    */
   def info: Map[String, String]  
   
+  /**
+   * Embedded miniature documents connected to a resource.
+   * 
+   * These are usually defined as Markdown in the YAML front-matter
+   * and rendered into HTML. They may be used to provide abstracts,
+   * overviews, tweet-sized summaries etc. A Minidoc is also used
+   * to hold the "before-the-jump" HTML fragment of a blog post.
+   */
+  def minidoc: Map[String, Minidoc]
   
   /**
    * The unique identifier of this resource. Doesn't change during its lifetime.

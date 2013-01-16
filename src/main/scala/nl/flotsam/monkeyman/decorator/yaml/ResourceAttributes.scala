@@ -22,26 +22,16 @@ package nl.flotsam.monkeyman.decorator.yaml
 import org.joda.time.LocalDateTime
 import nl.flotsam.monkeyman.menu.MenuLink
 import nl.flotsam.monkeyman.MonkeymanOptions
-
-//class ResourceAttributes {
-//  
-//  var title: Option[String] = None
-//  var published: Boolean = true  
-//  var tags: Set[String] = Set()
-//  var pubDateTime: Option[LocalDateTime] = None
-//  
-//  var options: MonkeymanOptions = new MonkeymanOptions(Seq())
-//  var menuLink: Option[MenuLink] = None
-//  var info: Map[String, String] = Map.empty
-//}
+import nl.flotsam.monkeyman.Minidoc
 
 case class ResourceAttributes(var title: Option[String] = None,
   var published: Boolean = true,
   var tags: Set[String] = Set(),
   var pubDateTime: Option[LocalDateTime] = None,  
-  var options: MonkeymanOptions = new MonkeymanOptions(Seq()),
+  var options: MonkeymanOptions = new MonkeymanOptions(),
   var menuLink: Option[MenuLink] = None,
-  var info: Map[String, String] = Map.empty) {
+  var info: Map[String, String] = Map.empty,
+  var minidoc: Map[String, Minidoc] = Map.empty) {
     
  
   def withTitle(t: String) = copy(title = Some(t))
@@ -52,11 +42,5 @@ case class ResourceAttributes(var title: Option[String] = None,
   def withOptions(o: MonkeymanOptions) = copy(options = o) // TODO combine options
   def withMenuLink(ml: MenuLink) = copy(menuLink = Some(ml))
   def withInfo(i: Map[String, String]) = copy(info = info ++ i)
+  def withMinidoc(m: Map[String, Minidoc]) = copy(minidoc = minidoc ++ m)
 }
-
-//object A {
-//val parent = ResourceAttributes()
-//  .withTitle("foo bar baz")
-//  
-//  
-//}

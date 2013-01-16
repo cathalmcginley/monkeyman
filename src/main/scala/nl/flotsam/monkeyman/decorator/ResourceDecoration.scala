@@ -46,6 +46,8 @@ class ResourceDecoration(resource: Resource) extends Resource {
   def menuLink = resource.menuLink
   
   def info = resource.info
+  
+  def minidoc = resource.minidoc
     
   def id = resource.id
   

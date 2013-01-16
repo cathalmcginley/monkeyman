@@ -29,6 +29,7 @@ import scala.util.control.Exception._
 import java.util.{ HashMap => JMap }
 import scala.collection.JavaConversions._
 import nl.flotsam.monkeyman.MonkeymanOptions
+import nl.flotsam.monkeyman.Minidoc
 
 private[yaml] class ResourceAttributesBean extends Logging {
 
@@ -39,6 +40,7 @@ private[yaml] class ResourceAttributesBean extends Logging {
   @BeanProperty var pubDateTime: String = null // LocalDateTime
   @BeanProperty var menu: MenuBean = NotInMenu
   @BeanProperty var info: JMap[String, String] = new JMap[String, String]()
+  @BeanProperty var minidoc: JMap[String, String] = new JMap[String, String]()
 
   private val DateAndTimePattern = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm")
   private val DatePattern = DateTimeFormat.forPattern("yyyy-MM-dd")
@@ -52,7 +54,6 @@ private[yaml] class ResourceAttributesBean extends Logging {
   }
 
   def getAttributes(resource: Resource) = {
-
     val attributeBuilders: Seq[(ResourceAttributes => ResourceAttributes)] = Seq(
       (attr) => 
         if (title == null) { attr }
@@ -82,43 +83,14 @@ private[yaml] class ResourceAttributesBean extends Logging {
         if (!menu.display) { attr }
         else { attr.withMenuLink(menu.getMenuLink(resource)) },
       (attr) => 
-        if (!info.isEmpty) { attr }
-        else { attr.withInfo(info.toMap) }        
+        if (info.isEmpty) { attr }
+        else { attr.withInfo(info.toMap) },
+      (attr) =>
+        if (minidoc.isEmpty) { attr }
+        else { attr.withMinidoc(minidoc.toMap.map { case (name, value) => (name -> Minidoc.fromMarkdown(name, value)) }) }
     )
     
      attributeBuilders.foldLeft(ResourceAttributes())((attr, build) => build(attr))
   }
-//
-//    println("attr " + attr.title + " | " + attr.tags + " | " + attr.options)
-
-    //if (title != null) attribs.title = Some(title)
-    //attribs.published = published
-
-//    if (options != null) {
-//      attribs.options = MonkeymanOptions.parse(options.split(",").map(_.trim))
-//    }
-
-//    if (tags != null) {
-//      attribs.tags = tags.split(",").map(_.trim).toSet
-//    }
-//
-//    if (pubDateTime != null) {
-//      val dateTime = parseDateTime(pubDateTime)
-//      if (dateTime.isDefined) {
-//        attribs.pubDateTime = dateTime
-//      } else {
-//        warn("Failed to parse pubDateTime in %s".format(resource.path))
-//      }
-//    }
-
-//    if (menu.display) {
-//      attribs.menuLink = Some(menu.getMenuLink(resource))
-//    }
-//    if (!info.isEmpty()) {
-//      attribs.info = info.toMap
-//    }
-
-    
-//  }
 
 }

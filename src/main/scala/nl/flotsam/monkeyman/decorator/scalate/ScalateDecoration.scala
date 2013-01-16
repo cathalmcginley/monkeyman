@@ -43,6 +43,7 @@ class ScalateDecoration(resource: Resource, template: Template, engine: Template
     context.attributes("Path") = new RelativePathHelper(resource)
     context.attributes("Navigation") = new NavigationMenuHelper(allResources(), resource)
     context.attributes("info") = resource.info
+    context.attributes("minidoc") = resource.minidoc.map { case (name, minidoc) => (name -> minidoc.html) }
     template.render(context)
     IOUtils.toInputStream(writer.toString)
   }
