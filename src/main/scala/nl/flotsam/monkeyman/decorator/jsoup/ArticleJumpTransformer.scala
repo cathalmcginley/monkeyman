@@ -59,7 +59,7 @@ object ArticleJumpTransformer extends JsoupTransformer("ArticleJump") {
         val beforeDiv = new Element(Tag.valueOf("div"), "")
         beforeDiv.addClass("before-jump")
         for (node <- nodesBefore) {
-          beforeDiv.appendChild(node)
+          beforeDiv.appendChild(node.clone())
         }
         jumpElement.replaceWith(new Comment("jump", ""))
         // TODO attr.withMinidoc(minidocJMap.toMap)
