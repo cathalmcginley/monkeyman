@@ -30,11 +30,34 @@ class RelativePathHelper(private val resource: Resource) extends Logging {
    * Strip .html from links, and link to somepath/ rather than somepath/index.html.
    * Note, it should not strip all suffixes, such as for images and style sheets.
    */
-  def coolUrls: Boolean = false
+  def coolUrls: Boolean = true
 
   def to(toPath: String): String = {
-    pathFromTo(resource.path, toPath)
+    val htmlPath = pathFromTo(resource.path, toPath)
+    if (coolUrls) {
+      removeIndexPageName(removeHtmlSuffix(htmlPath))
+    } else {
+      htmlPath
+    }
   } 
+  
+  def removeIndexPageName(path: String) = {
+    if (path.equals("index")) {
+      "./"
+    } else if (path.endsWith("/index")) {
+      path.substring(0, path.lastIndexOf("index"))
+    } else {
+      path
+    }
+  }
+  
+  def removeHtmlSuffix(path: String) = {
+    if (path.endsWith(".html")) {
+      path.substring(0, path.indexOf(".html"))
+    } else {
+      path
+    }
+  }
   
   private[helper] def pathFromTo(fromPath: String, toPath: String): String = {
     val (fromParts, toParts) = stripCommonPrefix(fromPath.split("/"), toPath.split("/"))

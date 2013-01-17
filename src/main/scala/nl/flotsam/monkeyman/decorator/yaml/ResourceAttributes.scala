@@ -37,7 +37,7 @@ case class ResourceAttributes(var title: Option[String] = None,
     
  
   def withTitle(t: String) = copy(title = Some(t))
-  def withPublished(b: Boolean) = copy(published = true)  
+  def withPublished(b: Boolean) = copy(published = b)  
   def withTags(t: Set[String]) = copy(tags = tags ++ t)
   def withPubDateTime(pdt: LocalDateTime) = copy(pubDateTime = Some(pdt))
   
